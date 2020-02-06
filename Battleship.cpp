@@ -116,10 +116,11 @@ int isSpotTaken(int **matrix, int x, int y)
             else
             {
                 cout << "MISS!" << endl;
+                return -1;
             }
         }
     }
-    return -1;
+   return -1;
 }
 
 int** createBoard()
@@ -168,10 +169,11 @@ int main()
     // };
 
     cout << "Player 1, enter your ships on the board\n";
-    int count = 0;
+    int count = 4;
     int i;
     int j;
     int ship;
+    int damage = 0;
     int shipDamageCount = 0;
     char horizontal = 'h';
     char vertical = 'v';
@@ -207,18 +209,33 @@ int main()
     cout << "Enter i, j: ";
     int x;
     int y;
-    cin >> x >> y;
-
-
-    cout << shipDamageCount;
-    int damage = 0;
-    
-    if (isSpotTaken(newBoard,x,y) == 0)
+    //cin >> x >> y;
+    // REMEMBER BOARD STARTS AT POSITION 0!!!
+    while (damage < shipDamageCount)
     {
-        gameBoard[x][y] = 1;
+        cin >> x >> y;
+        if (isSpotTaken(newBoard,x,y) == 0)
+        {
+            gameBoard[x][y] = 1;
+            printBoard(gameBoard);
+            damage++;
+
+            
+        }
+        continue;
     }
-    printBoard(gameBoard);
-    cout << endl;
+
+    if (damage == shipDamageCount)
+    {
+        cout << "YOU WIN!" << endl;
+    }
+    
+    // if (isSpotTaken(newBoard,x,y) == 0)
+    // {
+    //     gameBoard[x][y] = 1;
+    // }
+    // printBoard(gameBoard);
+    // cout << endl;
 
     delete newBoard;
     //cout << endl;
