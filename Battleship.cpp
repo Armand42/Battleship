@@ -5,6 +5,46 @@ using namespace std;
 #define SHIPS 5
 
 
+
+class Ship {
+
+    public:
+        int placeOnRow(int **matrix, int row, int col, int shipSize);
+        int placeOnCol(int **matrix, int row, int col, int shipSize);
+        void getdata();
+    private:
+        int xCoordinate;
+        int yCoordinate;
+        int shipClass;
+
+};
+
+class Players
+{
+
+    private:
+        int player1;
+        int player2;
+};
+
+class Board 
+{
+    public:
+        int **createBoard();
+        void printBoard(int** arr);
+    
+
+};
+
+class BattleShip: public Ship, public Board, public Players
+{
+
+};
+
+
+
+
+
 void printMatrix(int matrix[M][N])
 {
     
@@ -61,23 +101,25 @@ int placeOnCol(int **matrix, int row, int col, int shipSize)
 }
 
 
-bool isSpotTaken(int matrix[M][N])
+int isSpotTaken(int **matrix, int x, int y)
 {
-    bool row[M] = {false};
-    bool col[N] = {false};
-
+    
     for (int i = 0; i < M; i++)
     {
         for (int j = 0; j < N; j++)
         {
-            if (matrix[i][j] == 1)
+            if (matrix[x][y] == 1)
             {
-                row[i] = true;      // keep track of 1 in row
-                col[j] = true;      // keep track of 1 in col
+               cout << "HIT!" << endl;
+               return 0;
+            }
+            else
+            {
+                cout << "MISS!" << endl;
             }
         }
     }
-    return false;
+    return -1;
 }
 
 int** createBoard()
@@ -108,6 +150,7 @@ void printBoard(int** arr)
 
 
 
+
 int main()
 {
     cout << "********** WELCOME TO BATTLESHIP **********\n";
@@ -129,6 +172,7 @@ int main()
     int i;
     int j;
     int ship;
+    int shipDamageCount = 0;
     char horizontal = 'h';
     char vertical = 'v';
     char orientation;
@@ -137,6 +181,7 @@ int main()
     {
         cout << "Enter in i, j, ship:";
         cin >> i >> j >> ship >> orientation;
+        shipDamageCount = shipDamageCount + ship;
         if (orientation == 'h') 
         {
             if (placeOnRow(newBoard,i,j,ship) != 0)     
@@ -155,6 +200,26 @@ int main()
     }
     //placeOnRow(newBoard,2,2,3);
     printBoard(newBoard);
+    
+    cout << "Game Board " << endl;
+    int **gameBoard;
+    gameBoard = createBoard();
+    cout << "Enter i, j: ";
+    int x;
+    int y;
+    cin >> x >> y;
+
+
+    cout << shipDamageCount;
+    int damage = 0;
+    
+    if (isSpotTaken(newBoard,x,y) == 0)
+    {
+        gameBoard[x][y] = 1;
+    }
+    printBoard(gameBoard);
+    cout << endl;
+
     delete newBoard;
     //cout << endl;
     //placeOnCol(newBoard,2,2,3);
