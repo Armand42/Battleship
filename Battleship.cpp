@@ -8,8 +8,6 @@ using namespace std;
 #define SHIPS 5
 
 
-
-
 class BattleShip: public Ship, public Board, public Players
 {
 
@@ -30,7 +28,7 @@ int main()
     int count = 4;
     int i = board.getXCoor();
     int j = board.getYCoor();
-    int ship;
+    int ship = board.getShipClass();
     int damage = 0;
     int shipDamageCount = board.getShipDamageCount();
     char horizontal = 'h';
